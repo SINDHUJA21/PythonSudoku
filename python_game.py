@@ -1,5 +1,6 @@
 
 from __future__ import print_function
+from builtins import input
 import numpy
 import time
 
@@ -101,6 +102,12 @@ class PythonGame:
                 print("|", end="")
 
 
+    def result(self):
+        for each in numpy.nditer(self.form_board()):
+            if each == " ":
+                return False
+        # for each in numpy.nditer(self.form_board()):
+
 
 play_game = PythonGame()
 
@@ -108,5 +115,18 @@ print("Welcome !!! Let's play sudoko:")
 print("Board will be presented here:")
 time.sleep(2)
 play_game.print_board()
-print("Lets start the game. Fill the empty spaces with relevant values. To update the board specify the horizontal and vertical character: (eg : a,B=2)\n")
-# get_values = input()
+print("Lets start the game. Fill the empty spaces with relevant values. To update the board specify the horizontal and vertical character: (eg : a,B,2)\n")
+while(True):
+    get_row = input().split(",")
+    print(get_row)
+    play_game.print_board()
+    print("Do you want to play further: ( Y | N ):")
+    get_input = input()
+    if get_input != "Y" or get_input != "y":
+        break
+
+check_result = play_game.result()
+if check_result == True:
+    print("You Won!!!")
+else:
+    print("Sorry you lost. Better luck next time")
