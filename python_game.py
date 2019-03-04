@@ -1,6 +1,7 @@
 
 from __future__ import print_function
 import numpy
+import time
 
 class PythonGame:
 
@@ -10,26 +11,20 @@ class PythonGame:
         self.board = numpy.zeros((9,9), dtype = int)
         self.set_vertical_value = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' ]
         self.set_horizontal_value = [ each_char.lower() for each_char in self.set_vertical_value ]
+        self.space_symbol = ' '
     
     def print_horizontal_line(self, number_of_dashes):
-        print(number_of_dashes)
         for each in range(0,int(number_of_dashes)):
-            print(each)
             print("-", end="")
 
-    def print_vertical_line(self, number_of_dashes):
-        for each in range(number_of_dashes):
-            print("|")
-
     def print_horizontal_alphabets(self):
-        space_symbol = ' '
+        print("|", end="")
         for each in self.set_horizontal_value:
-            print(2*space_symbol + each, end=2*space_symbol)
+            print(2*self.space_symbol + each, end=2*self.space_symbol)
+            print("|", end="")
 
-    def print_vertical_alphabets(self):
-        space_symbol = ' '
-        for each in self.set_vertical_value:
-            print(each)
+    def print_new_line(self):
+        print("\n")
 
     def form_board(self):
 
@@ -81,7 +76,37 @@ class PythonGame:
         self.board[8,7] = 1
         return self.board
 
+    def print_board(self):
+        # self.print_horizontal_line(55)
+        self.print_new_line()
+        self.print_horizontal_alphabets()
+        self.print_new_line()
+        self.print_horizontal_line(55)
+        self.print_new_line()
+        count = 1
+        iterate = 0
+        print("|", end="")
+        for each_val in numpy.nditer(self.form_board()):
+            if each_val == 0:
+                each_val = " "
+            print(2*self.space_symbol + "{}".format(each_val), end=2*self.space_symbol)
+            print("|", end="")
+            count+=1
+            if count > 9:
+                print(2*self.space_symbol + self.set_vertical_value[iterate])
+                iterate+=1
+                count = 1
+                self.print_horizontal_line(55)      
+                print("\n")    
+                print("|", end="")
+
+
 
 play_game = PythonGame()
 
-print(play_game.form_board())
+print("Welcome !!! Let's play sudoko:")
+print("Board will be presented here:")
+time.sleep(2)
+play_game.print_board()
+print("Lets start the game. Fill the empty spaces with relevant values. To update the board specify the horizontal and vertical character: (eg : a,B=2)\n")
+# get_values = input()
